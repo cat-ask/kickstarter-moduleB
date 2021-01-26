@@ -5,9 +5,23 @@ export default class System{
 
     investor_list_popup_more=e=>{
         let idx = e.target.dataset.idx;
+        let fund = this.fundList[idx];
         let data = this.fundList[idx].investorList;
-        let title = "투자자 목록";
-        let content = `<div id="investorPopupMoreList">`
+        let title = "상세정보";
+        let content = ``;
+        if(e.target.classList.contains("highFundMoreBtn")) {
+            content += `<div class="highFundBox" style="justify-content:flex-start; margin:0; padding-top:0px;">
+                            <div class="highFundInfo">
+                                <h5 class="highFundInfoTitle">${fund.name}</h5>
+                                <div class="highFundPrograssBox" data-achieve="${fund.achieve}"><div class="highFundPrograssBar" style="width:${fund.achieve}%;"></div></div>
+                                <p class="highFundInfoText"><span class="green"><i class="fa fa-krw green mr-5"></i>${fund.current.toLocaleString()}</span> <span class="highFundInfoCate">현재금액</span></p>
+                                <p class="highFundInfoSubTitle">${fund.achieve.toLocaleString()}%<span class="highFundInfoCate">달성율</span></p>
+                                <p class="highFundInfoText">${fund.endDate}<span class="highFundInfoCate">모집마감일</span></p>
+                            </div>
+                        </div>`;
+        }
+        content += `<div id="investorPopupMoreList">
+                        <p style="margin:10px; font-weight:bold; font-size:1.2em;">투자자목록</p>`
         data.forEach(x=>{
             content += `<div class="investorPopupMoreBox">
                             <h5 class="investorPopupMoreTitle"><span class="mr-5">Email</span>${x.email}</h5>
@@ -74,16 +88,15 @@ export default class System{
 
     make_toast(msg){
         let dom = document.createElement("div");
-        dom.innerHTML = `<div id="toast">${msg}</div>`;
+        let id = Date.now();
+        dom.innerHTML = `<div class="toast" id="${id}"><button class="toastClose"><i class="fa fa-remove"></i></button>${msg}</div>`;
 
-        document.querySelector("#wrap").appendChild(dom.firstChild);
+        dom.querySelector(".toastClose").addEventListener("click",e=>{document.querySelector("#toast_bc").removeChild(e.target.parentNode);});
+        document.querySelector("#toast_bc").appendChild(dom.firstChild);
 
-        let wrap_width = document.querySelector("#wrap").getBoundingClientRect().width;
-
-        $("#toast").css("left",((($("#wrap").width()/2) - ($("#toast").width())/2))+"px");
-        document.querySelector("#toast").classList.add("open");
-        setTimeout(()=>{
-            document.querySelector("#toast").classList.remove("open");
-        },1500,()=>{document.querySelector("#wrap").removeChild(document.querySelector("#toast"))});
+        $("#"+id).show();
+        setInterval(()=>{
+            $("#"+id).hide();
+        },3000,()=>{$("#"+id).remove();});
     }
 }

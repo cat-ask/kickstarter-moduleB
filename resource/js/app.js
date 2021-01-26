@@ -63,22 +63,22 @@ class App{
         this.register = new register(this.fundList,this.system);
 
         this.router();
-        document.querySelectorAll(".navLink").forEach(x=>{
-            x.addEventListener("click",this.loadPage);
-        });
+        // document.querySelectorAll(".navLink").forEach(x=>{
+        //     x.addEventListener("click",this.loadPage);
+        // });
     }
 
-    loadPage=e=>{
-        this.path = e.target.dataset.link;
-        $("#visualAddContent").css("opacity",0);
-        setTimeout(()=>{
-            $("#visualAddContentBc").load(this.path+" #visualAddContent",()=>{
-                $("#visualAddContent").css("opacity",0);
-                setTimeout(()=>{$("#visualAddContent").css("opacity",1)},100);
-                this.router();
-            });
-        },600);
-    }
+    // loadPage=e=>{
+    //     this.path = e.target.dataset.link;
+    //     $("#visualAddContent").css("opacity",0);
+    //     setTimeout(()=>{
+    //         $("#visualAddContentBc").load(this.path+" #visualAddContent",()=>{
+    //             $("#visualAddContent").css("opacity",0);
+    //             setTimeout(()=>{$("#visualAddContent").css("opacity",1)},100);
+    //             this.router();
+    //         });
+    //     },600);
+    // }
     
 }
 
